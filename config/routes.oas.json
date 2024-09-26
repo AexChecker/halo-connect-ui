@@ -25,6 +25,27 @@
         },
         "operationId": "51cc7338-9f20-4a80-bfde-da8a90aafa49"
       }
+    },
+    "/type-ahead/:fieldName": {
+      "x-zuplo-path": {
+        "pathMode": "open-api"
+      },
+      "post": {
+        "summary": "Type-Ahead Options",
+        "description": "Lorem ipsum dolor sit amet, **consectetur adipiscing** elit, sed do `eiusmod tempor` incididunt ut labore et dolore magna aliqua.",
+        "x-zuplo-route": {
+          "corsPolicy": "none",
+          "handler": {
+            "export": "default",
+            "module": "$import(./modules/hello-world)",
+            "options": {}
+          },
+          "policies": {
+            "inbound": []
+          }
+        },
+        "operationId": "6c26b908-7f6d-4874-be04-c1c4f12c7bda"
+      }
     }
   }
 }
