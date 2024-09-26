@@ -37,7 +37,7 @@
           "corsPolicy": "none",
           "handler": {
             "export": "default",
-            "module": "$import(./modules/hello-world)",
+            "module": "$import(./modules/order--all-filters)",
             "options": {}
           },
           "policies": {
