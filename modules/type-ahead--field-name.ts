@@ -1,14 +1,23 @@
-import { ZuploContext, ZuploRequest } from "@zuplo/runtime";
+import { ZuploRequest, ZuploContext } from '@zuplo/runtime';
 
-export default async function (request: ZuploRequest, context: ZuploContext) {
+interface OrderFilterTypeAheadOption {
+  key: string;
+  value: string;
+}
+
+interface OrderFilterTypeAheadResponse {
+  dropdownOptions: OrderFilterTypeAheadOption[];
+  hasMore: boolean;
+}
+
+const handler = async (request: ZuploRequest, context: ZuploContext) => {
   const { fieldName } = request.params;
 
-  
-  let response: Record<string, unknown>[];
+  let dropdownOptions: OrderFilterTypeAheadOption[] = [];
 
   switch (fieldName) {
     case 'aeCode':
-      response = [
+      dropdownOptions = [
         { key: 'SUSAMP', value: '; SUNRISE HOUSE SAMPLE - SUSAMP' },
         { key: 'SU103', value: '; SUNRISE HOUSE SAMPLE - SUSAMP' },
         { key: 'BT100', value: 'MELISSA ANDERSON - BT100' },
@@ -16,13 +25,13 @@ export default async function (request: ZuploRequest, context: ZuploContext) {
       ];
       break;
     case 'teamCode':
-      response = [
+      dropdownOptions = [
         { key: 'BT100', value: 'BT100' },
         { key: 'SU103', value: 'SU103' },
       ];
       break;
     case 'customerId':
-      response = [
+      dropdownOptions = [
         { key: '26388', value: 'AMAZON CORPORATE LLC - 509627' },
         { key: '172433', value: 'CAPITAL ONE - 576545' },
         { key: '355863', value: 'CAPITAL ONE - 522350' },
@@ -30,13 +39,13 @@ export default async function (request: ZuploRequest, context: ZuploContext) {
       ];
       break;
     case 'customerGroup':
-      response = [];
+      dropdownOptions = [];
       break;
     case 'assigneeUserId':
-      response = [];
+      dropdownOptions = [];
       break;
     case 'supplierId':
-      response = [
+      dropdownOptions = [
         { key: '1', value: 'SANMAR' },
         { key: '7808', value: 'SS TRADERS/FORMERLY TISHANSOFT' },
         { key: '318133', value: '' },
@@ -46,22 +55,22 @@ export default async function (request: ZuploRequest, context: ZuploContext) {
       ];
       break;
     case 'orderStatus':
-      response = [
+      dropdownOptions = [
         { key: 'Invoiced', value: 'Invoiced' },
         { key: 'In Billing', value: 'In Billing' },
       ];
       break;
     case 'projectId':
-      response = [];
+      dropdownOptions = [];
       break;
     case 'priority':
-      response = [
+      dropdownOptions = [
         { key: 'Normal', value: 'Normal' },
         { key: 'Rush', value: 'Rush' },
       ];
       break;
     case 'orderErpNum':
-      response = [
+      dropdownOptions = [
         { key: '942862', value: 'W3382660' },
         { key: '300305', value: 'W3169588' },
         { key: '297933', value: 'W3166342' },
@@ -77,12 +86,12 @@ export default async function (request: ZuploRequest, context: ZuploContext) {
       ];
       break;
     case 'orderType':
-      response = [
+      dropdownOptions = [
         { key: 'Regular Order', value: 'Regular Order' },
       ];
       break;
     case 'orderTagId':
-      response = [
+      dropdownOptions = [
         { key: '12', value: 'Apparel/Blank Goods Order' },
         { key: '13', value: 'Hard Goods order' },
         { key: '14', value: 'Customer PO' },
@@ -91,13 +100,20 @@ export default async function (request: ZuploRequest, context: ZuploContext) {
       ];
       break;
     case 'purchaseOrderErpNum':
-      response = [];
+      dropdownOptions = [];
       break;
     default:
-      response = [{ key: 'test', value: 'test' }];
+      dropdownOptions = [{ key: 'test', value: 'test' }];
   }
+
+  const response: OrderFilterTypeAheadResponse = {
+    dropdownOptions,
+    hasMore: false,
+  };
 
   return new Response(JSON.stringify(response), {
     headers: { 'Content-Type': 'application/json' },
   });
-}
+};
+
+export default handler;
